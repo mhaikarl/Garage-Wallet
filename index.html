@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1016">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Garage Wallet">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="styles.css">
+<title>Garage / Wallet</title>
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <div><div class="eyebrow">PERSONAL COMMAND CENTRE</div><h1>GARAGE <span>/</span> WALLET</h1></div>
+    <div class="avatar">GW</div>
+  </header>
+  <nav class="tabs" aria-label="Main navigation">
+    <button class="tab active" data-tab="home">Overview</button>
+    <button class="tab" data-tab="car">My S70</button>
+    <button class="tab" data-tab="money">Money</button>
+    <button class="tab" data-tab="activity">Activity</button>
+    <button class="tab" data-tab="backup">Backup</button>
+  </nav>
+  <main>
+    <section id="home" class="page active">
+      <div class="welcome-row"><div><div class="eyebrow" id="monthLabel">MONTHLY OVERVIEW</div><h2>Your money. Your machine.</h2></div><span class="pill" id="healthPill">LIVE BUDGET</span></div>
+      <div class="hero-card">
+        <div class="eyebrow">AVAILABLE AFTER PLANNED COMMITMENTS</div>
+        <div class="big-number" id="available">RM0.00</div>
+        <div class="hero-sub"><span id="salaryLabel">Salary RM2,440.00</span><span id="usedPct">0% allocated</span></div>
+        <div class="progress"><i id="budgetBar"></i></div>
+        <div class="hero-grid"><div><small>Planned outflow</small><b id="outflow">RM0.00</b></div><div><small>Logged spending</small><b id="logged">RM0.00</b></div></div>
+      </div>
+      <div class="section-heading"><h3>Monthly snapshot</h3><button class="text-btn" data-go="money">Edit budget ↗</button></div>
+      <div class="metric-grid">
+        <article class="metric"><span class="metric-icon">🚘</span><small>Car budget</small><b id="carTotal">RM0.00</b><em>Instalment + running costs</em></article>
+        <article class="metric"><span class="metric-icon">💳</span><small>BNPL this month</small><b id="bnplMonthly">RM0.00</b><em>Atome + SPayLater</em></article>
+        <article class="metric"><span class="metric-icon">🏦</span><small>BNPL outstanding</small><b id="bnplOutstanding">RM0.00</b><em>Remaining balances</em></article>
+        <article class="metric"><span class="metric-icon">🛠️</span><small>Maintenance fund</small><b id="maintenanceMetric">RM0.00</b><em>Monthly provision</em></article>
+      </div>
+      <div class="section-heading"><h3>Quick actions</h3></div>
+      <div class="quick-grid">
+        <button class="quick" data-go="activity"><span>＋</span><b>Log expense</b><small>Record a purchase</small></button>
+        <button class="quick" data-go="car"><span>🔧</span><b>Log car upkeep</b><small>Service, tyres, fuel</small></button>
+        <button class="quick" data-go="money"><span>↘</span><b>Update BNPL</b><small>Track repayments</small></button>
+        <button class="quick" data-go="backup"><span>☁</span><b>iCloud backup</b><small>Export or restore data</small></button>
+      </div>
+      <div class="notice"><b>Heads-up</b><p>Figures are editable planning estimates. Update them with your actual bank instalment, insurance quotation and bills before relying on the budget.</p></div>
+    </section>
+
+    <section id="car" class="page">
+      <div class="page-title"><div class="eyebrow">YOUR VEHICLE</div><h2>Proton S70 <span class="muted">Premium</span></h2><p>Ownership costs, mileage and maintenance history.</p></div>
+      <div class="car-banner"><div><div class="eyebrow">MONTHLY CAR BUDGET</div><div class="big-number" id="carBudgetBig">RM0.00</div><small>Estimated provision, not necessarily monthly bills</small></div><div class="car-symbol">S70</div></div>
+      <div class="section-heading"><h3>Recurring costs</h3><span class="tag">EDITABLE</span></div>
+      <div class="form-grid">
+        <label>Loan instalment (RM)<input id="loan" type="number" min="0" step=".01"></label>
+        <label>Petrol (RM/month)<input id="petrol" type="number" min="0" step=".01"></label>
+        <label>Insurance provision (RM/month)<input id="insurance" type="number" min="0" step=".01"></label>
+        <label>Road tax provision (RM/month)<input id="roadtax" type="number" min="0" step=".01"></label>
+        <label>Maintenance provision (RM/month)<input id="maintenance" type="number" min="0" step=".01"></label>
+        <label>Toll & parking (RM/month)<input id="toll" type="number" min="0" step=".01"></label>
+      </div>
+      <button class="primary full" id="saveCar">Save car budget</button>
+      <div class="section-heading"><h3>Vehicle log</h3></div>
+      <form id="carLogForm" class="panel form-stack">
+        <label>Log type<select id="carType"><option>Fuel</option><option>Service</option><option>Tyres</option><option>Battery</option><option>Repair</option><option>Insurance</option><option>Road tax</option><option>Other</option></select></label>
+        <div class="form-grid"><label>Date<input id="carDate" type="date" required></label><label>Amount (RM)<input id="carAmount" type="number" min="0" step=".01" required></label></div>
+        <label>Odometer (km), optional<input id="odometer" type="number" min="0" placeholder="e.g. 12500"></label>
+        <label>Notes<input id="carNotes" maxlength="120" placeholder="e.g. 10,000 km service"></label>
+        <button class="primary">Add vehicle record</button>
+      </form>
+      <div id="carHistory" class="list"></div>
+    </section>
+
+    <section id="money" class="page">
+      <div class="page-title"><div class="eyebrow">YOUR CASH FLOW</div><h2>Money management</h2><p>Set your income, bills, repayments and savings targets.</p></div>
+      <div class="panel form-stack">
+        <h3>Income & regular bills</h3>
+        <label>Monthly take-home salary (RM)<input id="salary" type="number" min="0" step=".01"></label>
+        <label>Payday<input id="payday" type="number" min="1" max="31"></label>
+        <label>Phone, subscriptions & other bills (RM/month)<input id="bills" type="number" min="0" step=".01"></label>
+        <label>Monthly savings target (RM)<input id="savingsTarget" type="number" min="0" step=".01"></label>
+        <button class="primary" id="saveMoney">Save income & bills</button>
+      </div>
+      <div class="section-heading"><h3>BNPL payoff tracker</h3><span class="tag">UPDATE AFTER PAYMENTS</span></div>
+      <div class="panel form-stack">
+        <div class="bnpl-head"><div><b>Atome</b><small>Clear this first</small></div><span class="bnpl-chip">PRIORITY</span></div>
+        <div class="form-grid"><label>Outstanding balance (RM)<input id="atomeBalance" type="number" min="0" step=".01"></label><label>Planned payment this month (RM)<input id="atomeMonthly" type="number" min="0" step=".01"></label></div>
+        <button class="secondary full" id="payAtome">Record Atome payment</button>
+        <div class="divider"></div>
+        <div class="bnpl-head"><div><b>Shopee SPayLater</b><small>Track the declining schedule</small></div><span class="bnpl-chip neutral">MONITOR</span></div>
+        <div class="form-grid"><label>Outstanding balance (RM)<input id="spayBalance" type="number" min="0" step=".01" placeholder="Enter actual total"></label><label>Payment this month (RM)<input id="spayMonthly" type="number" min="0" step=".01"></label></div>
+        <button class="secondary full" id="paySpay">Record SPayLater payment</button>
+        <p class="hint">Your RM499 current SPayLater payment is prefilled as a monthly commitment. The total outstanding balance is unknown, so enter it when you have checked the app.</p>
+      </div>
+      <div class="section-heading"><h3>BNPL position</h3></div>
+      <div class="metric-grid"><article class="metric"><small>Atome balance</small><b id="atomeShow">RM0.00</b></article><article class="metric"><small>SPayLater balance</small><b id="spayShow">RM0.00</b></article></div>
+      <div class="panel form-stack">
+        <h3>Savings & emergency fund</h3>
+        <label>Current savings (RM)<input id="savings" type="number" min="0" step=".01"></label>
+        <label>Emergency fund target (RM)<input id="emergencyTarget" type="number" min="0" step=".01"></label>
+        <button class="primary" id="saveSavings">Save savings figures</button>
+        <div class="progress"><i id="savingsBar"></i></div><small id="savingsProgress" class="muted"></small>
+      </div>
+    </section>
+
+    <section id="activity" class="page">
+      <div class="page-title"><div class="eyebrow">TRANSACTION REGISTER</div><h2>Activity & spending</h2><p>Log everyday spending and review your history.</p></div>
+      <form id="expenseForm" class="panel form-stack">
+        <h3>Add an expense</h3>
+        <label>Description<input id="expenseDesc" maxlength="100" placeholder="e.g. Lunch, petrol, parking" required></label>
+        <div class="form-grid"><label>Amount (RM)<input id="expenseAmount" type="number" min=".01" step=".01" required></label><label>Date<input id="expenseDate" type="date" required></label></div>
+        <label>Category<select id="expenseCategory"><option>Food</option><option>Fuel</option><option>Toll & parking</option><option>Shopping</option><option>Dates & entertainment</option><option>Bills</option><option>Health</option><option>Other</option></select></label>
+        <button class="primary">Save expense</button>
+      </form>
+      <div class="section-heading"><h3>Recent expenses</h3><span id="expenseCount" class="tag">0 RECORDS</span></div>
+      <div id="expenseHistory" class="list"></div>
+      <div class="notice"><b>Tip</b><p>Use the vehicle log for car-specific servicing and repairs. Use this expense register for everyday purchases. Avoid recording the same petrol transaction in both places if you want accurate totals.</p></div>
+    </section>
+
+    <section id="backup" class="page">
+      <div class="page-title"><div class="eyebrow">YOUR DATA, YOUR CONTROL</div><h2>Backup & settings</h2><p>Keep a copy of your records in iCloud Drive.</p></div>
+      <div class="icloud-card"><div class="cloud-icon">☁</div><div><b>iCloud Drive backup</b><p>Export a backup file, then save it in iCloud Drive using the iPhone Files sheet.</p></div></div>
+      <button class="primary full" id="exportBtn">Export backup (.json)</button>
+      <label class="import-label">Restore from backup (.json)<input id="importFile" type="file" accept="application/json,.json"></label>
+      <p class="hint">This is a manual backup workflow, not automatic iCloud synchronisation. Keep more than one backup if the data matters to you.</p>
+      <div class="panel form-stack">
+        <h3>App settings</h3>
+        <label>Currency<select id="currency"><option value="MYR">MYR – Malaysian Ringgit</option></select></label>
+        <button class="secondary full" id="resetBtn">Reset all app data</button>
+        <small class="muted">Reset cannot be undone unless you have an exported backup.</small>
+      </div>
+      <div class="notice"><b>Privacy note</b><p>Your entries are stored in this browser on this device using IndexedDB. Anyone with access to your unlocked phone/browser profile may be able to access them. This app does not connect to your bank, Atome or Shopee.</p></div>
+      <div class="version">GARAGE / WALLET • VERSION 1.0</div>
+    </section>
+  </main>
+  <footer><span>BUILT FOR YOUR DAILY DRIVE</span><span>MY • RM</span></footer>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
+</body></html>

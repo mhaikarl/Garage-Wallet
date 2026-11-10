@@ -1,0 +1,22 @@
+{
+  "name": "Garage / Wallet",
+  "short_name": "Garage Wallet",
+  "description": "Personal car ownership and finance tracker",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#090e13",
+  "theme_color": "#0b1016",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
